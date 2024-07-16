@@ -25,7 +25,7 @@ def get_city(
     )
 
 
-def get_city_by_name(db: Session, name: str):
+def get_city_by_name(db: Session, name: str) -> models.City:
     return (
         db.query(
             models.City
@@ -52,7 +52,7 @@ def update_city(
         db: Session,
         city_id: int,
         city: CityUpdate
-):
+) -> models.City:
     db_city = db.query(
         models.City
     ).filter(models.City.id == city_id).first()
@@ -64,7 +64,7 @@ def update_city(
     return db_city
 
 
-def delete_city(db: Session, city_id: int):
+def delete_city(db: Session, city_id: int) -> models.City:
     db_city = db.query(
         models.City
     ).filter(models.City.id == city_id).first()
@@ -74,17 +74,17 @@ def delete_city(db: Session, city_id: int):
     return db_city
 
 
-def get_temperatures(db: Session):
+def get_temperatures(db: Session) -> models.Temperature:
     return db.query(models.Temperature).all()
 
 
-def get_temperature(db: Session, temp_id: int):
+def get_temperature(db: Session, temp_id: int) -> models.Temperature:
     return db.query(
         models.Temperature
     ).filter(models.Temperature.id == temp_id).first()
 
 
-def get_temperatures_by_city_id(db: Session, city_id: int):
+def get_temperatures_by_city_id(db: Session, city_id: int) -> models.Temperature:
     return db.query(
         models.Temperature
     ).filter(models.Temperature.city_id == city_id).all()
@@ -93,7 +93,7 @@ def get_temperatures_by_city_id(db: Session, city_id: int):
 def create_temperature(
         db: Session,
         temperature: TemperatureCreate
-):
+) -> models.Temperature:
     db_temperature = models.Temperature(**temperature.dict())
     db.add(db_temperature)
     db.commit()
